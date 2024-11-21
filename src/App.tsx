@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Router, Routes, Route, Link } from 'react-router-dom';
+import { Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import { signOut, getCurrentUser } from 'aws-amplify/auth';
 import toast, { Toaster } from 'react-hot-toast';
@@ -72,16 +72,17 @@ function App() {
           <Route
             path="/login"
             element={
-              isAuthenticated ? <Link to="/dashboard" /> : <AuthForm mode="login" setIsAuthenticated={setIsAuthenticated} />
+              isAuthenticated ? <Navigate to="/dashboard" /> : <AuthForm mode="login" setIsAuthenticated={setIsAuthenticated} />
             }
           />
           <Route
             path="/register"
             element={
-              isAuthenticated ? <Link to="/dashboard" /> : <AuthForm mode="register" setIsAuthenticated={setIsAuthenticated} />
+              isAuthenticated ? <Navigate to="/dashboard" /> : <AuthForm mode="register" setIsAuthenticated={setIsAuthenticated} />
             }
           />
           <Route
+            
             path="/dashboard"
             element={
               isAuthenticated ? (
@@ -112,11 +113,11 @@ function App() {
                   </main>
                 </div>
               ) : (
-                <Link to="/login" />
+                <Navigate to="/login" />
               )
             }
           />
-          <Route path="*" element={<Link to={isAuthenticated ? "/dashboard" : "/login"} />} />
+          <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
         </Routes>
       
     </>
